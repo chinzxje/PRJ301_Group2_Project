@@ -15,26 +15,82 @@ body {
     box-shadow: 0 8px 24px rgba(26, 55, 99, 0.08);
 }
 
-.shop-header {
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid #dbe2ea;
-    margin-bottom: 14px;
-    width: 100%;
+.header-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:15px;
 }
 
-.header-top {
-    background: #0f4c81;
+.center-stack{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 15px;
+}
+
+.header-top .center-stack{
+    margin-right: auto;
+}
+
+.shop-logo{
+    margin-left: 5px;
+}
+
+.shop-header{
+    background:#0F4C81;
+    border-radius:12px;
+    padding:20px 30px;
+    color:white;
+}
+
+.shop-logo{
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 28px;
+}
+
+.shop-subtitle{
+    color: #eaf3ff;
+    font-size: 13px;
+}
+
+.header-user{
+    display:flex;
+    gap:15px;
+    align-items:center;
+}
+
+.header-user a{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.header-user a:hover{
+    text-decoration: underline;
+}
+
+.header-user span{
+    color: #ffffff;
+}
+
+.avatar-icon{
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    color: #ffffff;
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 14px 12px;
+    justify-content: center;
+    font-weight: 800;
 }
 
-.center-stack {
-    flex-direction: column;
-    justify-content: center;
+.header-user span{
+    color: white;
 }
+
+
 
 .shop-logo {
     color: #fff;
@@ -97,10 +153,16 @@ body {
     font-weight: 800;
 }
 
-.header-menu {
-    background: #ffffff;
-    padding: 10px 12px;
-    border-top: 1px solid #e6edf7;
+.header-menu{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+
+    margin-top:15px;
+    padding:12px 0;
+
+    background:#f5f7fa;
+    border-radius:6px;
 }
 
 .header-menu a {
@@ -115,15 +177,9 @@ body {
     text-decoration: none;
 }
 
-.header-user {
-    background: #ffffff;
-    border-top: 1px solid #eef2f8;
-    padding: 10px;
-}
-
 .header-user a,
 .header-user span {
-    color: #1f3a5a;
+    color: #ffffff;
 }
 
 .filter-bar {

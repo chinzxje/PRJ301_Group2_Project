@@ -22,40 +22,49 @@
                         <body>
                             <div class="container">
                                 <header class="shop-header">
-                                    <div class="header-top center-stack">
-                                        <div class="shop-logo">ComputerShop</div>
-                                        <div class="shop-subtitle">Thiết bị máy tính cho học tập và làm việc</div>
-                                    </div>
-                                    <nav class="header-menu center-menu">
-                                        <a href="<%=request.getContextPath()%>/home">Trang chủ</a>
-                                        <a href="home?q=laptop">Laptop</a>
-                                        <a href="home?q=pc">PC Gaming</a>
-                                        <a href="home?q=man+hinh">Màn hình</a>
-                                        <a href="home?q=ban+phim,chuot">Phụ kiện</a>
-                                        <% if (currentUser !=null && "ADMIN" .equalsIgnoreCase(currentUser.getRole())) {
-                                            %>
-                                            <a href="<%=request.getContextPath()%>/admin/products">Quản lý sản phẩm</a>
-                                            <a href="<%=request.getContextPath()%>/admin/report">Báo cáo</a>
-                                            <% } %>
-                                    </nav>
-                                    <div class="header-user center-menu">
-                                        <a href="<%=request.getContextPath()%>/cart">Giỏ hàng</a>
-                                        <% if (currentUser==null) { %>
-                                            <a href="<%=request.getContextPath()%>/login">Đăng nhập</a>
-                                            <a href="<%=request.getContextPath()%>/register">Đăng ký</a>
-                                            <span class="avatar-icon">?</span>
-                                            <% } else { %>
-                                                <span>Xin chào <b>
-                                                        <%=currentUser.getFullName()%>
-                                                    </b></span>
-                                                <a href="<%=request.getContextPath()%>/logout">Đăng xuất</a>
-                                                <span class="avatar-icon">
-                                                    <%=currentUser.getFullName().substring(0,1).toUpperCase()%>
-                                                </span>
-                                                <% } %>
-                                    </div>
-                                </header>
 
+                                   <div class="header-top">
+
+                                       <div class="center-stack">
+                                           <div class="shop-logo">ComputerShop</div>
+                                           <div class="shop-subtitle">
+                                               Thiết bị máy tính cho học tập và làm việc
+                                           </div>
+                                       </div>
+
+                                       <div class="header-user">
+                                           <a href="<%=request.getContextPath()%>/cart">Giỏ hàng</a>
+
+                                           <% if (currentUser==null) { %>
+                                               <a href="<%=request.getContextPath()%>/login">Đăng nhập</a>
+                                               <a href="<%=request.getContextPath()%>/register">Đăng ký</a>
+                                               <span class="avatar-icon">?</span>
+                                           <% } else { %>
+                                               <span>Xin chào <b><%=currentUser.getFullName()%></b></span>
+                                               <a href="<%=request.getContextPath()%>/logout">Đăng xuất</a>
+                                               <span class="avatar-icon">
+                                                   <%=currentUser.getFullName().substring(0,1).toUpperCase()%>
+                                               </span>
+                                           <% } %>
+                                       </div>
+
+                                   </div>
+
+                                   <nav class="header-menu center-menu">
+                                       <a href="<%=request.getContextPath()%>/home">Trang chủ</a>
+                                       <a href="home?q=laptop">Laptop</a>
+                                       <a href="home?q=pc">PC Gaming</a>
+                                       <a href="home?q=man+hinh">Màn hình</a>
+                                       <a href="home?q=ban+phim+chuot">Phụ kiện</a>
+
+                                       <% if (currentUser != null && "ADMIN".equalsIgnoreCase(currentUser.getRole())) { %>
+                                           <a href="<%=request.getContextPath()%>/admin/products">Quản lý sản phẩm</a>
+                                           <a href="<%=request.getContextPath()%>/admin/report">Báo cáo</a>
+                                       <% } %>
+                                   </nav>
+
+                               </header>
+                                
                                 <div class="filter-bar">
                                     <form method="get" action="home" class="search-form center-menu">
                                         <input type="text" name="q" value="<%=q%>" placeholder="Từ khóa">
