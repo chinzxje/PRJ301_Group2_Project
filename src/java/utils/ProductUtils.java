@@ -16,29 +16,24 @@ public class ProductUtils {
                 "SELECT id, name, brand, price, stock, sold, description, image_url FROM products WHERE 1=1");
         List<Object> params = new ArrayList<>();
 
-        if (keyword != null && !keyword.trim().isEmpty()) {
-            String[] keywords = keyword.trim().split(",");
-            if (keywords.length == 1) {
-                // single keyword: original behaviour
-                sql.append(
-                        " AND (name COLLATE Latin1_General_CI_AI LIKE ? OR brand COLLATE Latin1_General_CI_AI LIKE ?)");
-                String like = "%" + keywords[0].trim() + "%";
-                params.add(like);
-                params.add(like);
-            } else {
-                // multiple keywords joined by OR
-                sql.append(" AND (");
-                for (int ki = 0; ki < keywords.length; ki++) {
-                    if (ki > 0)
-                        sql.append(" OR ");
-                    sql.append("name COLLATE Latin1_General_CI_AI LIKE ? OR brand COLLATE Latin1_General_CI_AI LIKE ?");
-                    String like = "%" + keywords[ki].trim() + "%";
-                    params.add(like);
-                    params.add(like);
-                }
-                sql.append(")");
-            }
-        }
+       if (keyword != null && !keyword.trim().isEmpty()) {
+    String[] keywords = keyword.trim().split("\\s+");
+
+    sql.append(" AND (");
+
+    for (int i = 0; i < keywords.length; i++) {
+        if (i > 0) sql.append(" OR ");
+
+        sql.append("(name COLLATE Latin1_General_CI_AI LIKE ? OR brand COLLATE Latin1_General_CI_AI LIKE ?)");
+
+        String like = "%" + keywords[i].trim() + "%";
+        params.add(like);
+        params.add(like);
+    }
+
+    sql.append(")");
+}
+        
 
         if (minPrice != null) {
             sql.append(" AND price >= ?");

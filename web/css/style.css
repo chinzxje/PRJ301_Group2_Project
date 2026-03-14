@@ -146,7 +146,7 @@ body {
     height: 34px;
     border-radius: 50%;
     background: #f0f6ff;
-    color: #17447c;
+    color: #17447c !important;
     display: inline-flex;
     align-items: center;
     justify-content: center;

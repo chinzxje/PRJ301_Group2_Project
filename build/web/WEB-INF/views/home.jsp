@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+﻿<%@page contentType="text/html" pageEncoding="UTF-8" %>
     <%@page import="java.util.List" %>
         <%@page import="model.Product" %>
             <%@page import="model.User" %>
@@ -16,7 +16,7 @@
                         <head>
                             <meta charset="UTF-8">
                             <title>Trang chủ - Computer Shop</title>
-                            <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
+                            <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css?v=2">
                         </head>
 
                         <body>
@@ -38,13 +38,11 @@
                                            <% if (currentUser==null) { %>
                                                <a href="<%=request.getContextPath()%>/login">Đăng nhập</a>
                                                <a href="<%=request.getContextPath()%>/register">Đăng ký</a>
-                                               <span class="avatar-icon">?</span>
+                                               <span class="avatar-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#0f4c81"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></span>
                                            <% } else { %>
                                                <span>Xin chào <b><%=currentUser.getFullName()%></b></span>
                                                <a href="<%=request.getContextPath()%>/logout">Đăng xuất</a>
-                                               <span class="avatar-icon">
-                                                   <%=currentUser.getFullName().substring(0,1).toUpperCase()%>
-                                               </span>
+                                               <span class="avatar-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#0f4c81"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></span>
                                            <% } %>
                                        </div>
 
