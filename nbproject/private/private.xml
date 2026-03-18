@@ -3,11 +3,28 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/PC/PRJ301_Group2_Project/src/conf/database.sql</file>
-            <file>file:/C:/Users/PC/PRJ301_Group2_Project/web/css/style.css</file>
-            <file>file:/C:/Users/PC/PRJ301_Group2_Project/src/java/utils/ProductUtils.java</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/web/WEB-INF/views/login.jsp</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/src/java/controller/LoginServlet.java</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/src/java/utils/ReviewUtils.java</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/web/WEB-INF/views/wishlists.jsp</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/src/java/utils/CategoryUtils.java</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/src/java/controller/ProductDetailServlet.java</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/src/java/controller/AdminReportServlet.java</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/web/WEB-INF/views/register.jsp</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/src/java/controller/AdminProductServlet.java</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/src/java/utils/BrandUtils.java</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/web/WEB-INF/views/admin-report.jsp</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/src/java/controller/RegisterServlet.java</file>
             <file>file:/C:/Users/PC/PRJ301_Group2_Project/web/META-INF/context.xml</file>
             <file>file:/C:/Users/PC/PRJ301_Group2_Project/web/WEB-INF/views/home.jsp</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/src/conf/database.sql</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/web/css/style.css</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/web/WEB-INF/views/admin-products.jsp</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/src/java/utils/UserUtils.java</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/src/java/controller/HomeServlet.java</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/src/java/controller/LogoutServlet.java</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/src/java/utils/ProductUtils.java</file>
+            <file>file:/C:/Users/PC/PRJ301_Group2_Project/web/WEB-INF/views/forgot-password.jsp</file>
         </group>
     </open-files>
 </project-private>

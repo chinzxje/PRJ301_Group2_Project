@@ -1,8 +1,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
 <%@page import="model.Product"%>
+<%@page import="model.Category"%>
+<%@page import="model.Brand"%>
 <%
     List<Product> products = (List<Product>) request.getAttribute("products");
+    List<Category> categories = (List<Category>) request.getAttribute("categories");
+    List<Brand> brands = (List<Brand>) request.getAttribute("brands");
     Product editProduct = (Product) request.getAttribute("editProduct");
     boolean editing = editProduct != null;
 %>
@@ -25,13 +29,31 @@
 <form method="post" action="<%=request.getContextPath()%>/admin/products">
     <input type="hidden" name="id" value="<%=editing ? editProduct.getId() : 0%>">
     Tên: <input type="text" name="name" value="<%=editing ? editProduct.getName() : ""%>" required><br><br>
-    Thương hiệu: <input type="text" name="brand" value="<%=editing ? editProduct.getBrand() : ""%>" required><br><br>
-    Giá: <input type="number" name="price" value="<%=editing ? editProduct.getPrice() : 0%>" required><br><br>
+    
+    Thể loại: 
+    <select name="categoryId" required>
+        <option value="">-- Chọn thể loại --</option>
+        <% if (categories != null) { for(Category c : categories) { %>
+            <option value="<%=c.getId()%>" <%=editing && editProduct.getCategoryId() == c.getId() ? "selected" : ""%>><%=c.getName()%></option>
+        <% }} %>
+    </select><br><br>
+    
+    Thương hiệu: 
+    <select name="brandId" required>
+        <option value="">-- Chọn thương hiệu --</option>
+        <% if (brands != null) { for(Brand b : brands) { %>
+            <option value="<%=b.getId()%>" <%=editing && editProduct.getBrandId() == b.getId() ? "selected" : ""%>><%=b.getName()%></option>
+        <% }} %>
+    </select><br><br>
+    
+    Giá: <input type="number" name="price" value="<%=editing ? (int)editProduct.getPrice() : 0%>" required><br><br>
     Tồn kho: <input type="number" name="stock" value="<%=editing ? editProduct.getStock() : 0%>" required><br><br>
     Đã bán: <input type="number" name="sold" value="<%=editing ? editProduct.getSold() : 0%>" required><br><br>
     Image URL: <input type="text" name="imageUrl" value="<%=editing ? editProduct.getImageUrl() : "https://picsum.photos/seed/new-computer/640/400"%>" size="60"><br><br>
     Mô tả: <input type="text" name="description" value="<%=editing ? editProduct.getDescription() : ""%>" size="60"><br><br>
-    <button type="submit"><%=editing ? "Cập nhật" : "Thêm mới"%></button>
+    <button type="submit" style="background:#0b63c9; color:white; padding: 8px 16px; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">
+        <%=editing ? "Cập nhật sản phẩm" : "Thêm mới sản phẩm"%>
+    </button>
     <% if (editing) { %>
     <a href="<%=request.getContextPath()%>/admin/products">Hủy</a>
     <% } %>
@@ -43,6 +65,7 @@
         <th>ID</th>
         <th>Ảnh</th>
         <th>Tên</th>
+        <th>Phân loại</th>
         <th>Thương hiệu</th>
         <th>Giá</th>
         <th>Tồn kho</th>
@@ -54,7 +77,8 @@
         <td><%=p.getId()%></td>
         <td><img class="admin-thumb" src="<%=p.getImageUrl() == null || p.getImageUrl().trim().isEmpty() ? "https://picsum.photos/seed/admin-computer/160/100" : p.getImageUrl()%>" alt="<%=p.getName()%>" loading="lazy" decoding="async"></td>
         <td><%=p.getName()%></td>
-        <td><%=p.getBrand()%></td>
+        <td><%=p.getCategory() != null ? p.getCategory().getName() : ""%></td>
+        <td><%=p.getBrand() != null ? p.getBrand().getName() : ""%></td>
         <td><%=String.format("%,.0f", p.getPrice())%></td>
         <td><%=p.getStock()%></td>
         <td><%=p.getSold()%></td>

@@ -1,11 +1,16 @@
 package controller;
 
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.sql.Connection;
 import utils.ProductUtils;
+import utils.AddressUtils;
+import utils.DBUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -29,8 +34,64 @@ public class CartServlet extends HttpServlet {
             total += item.getLineTotal();
         }
 
+        HttpSession session = request.getSession();
+        
+        // Handle action from GET (e.g., cancel coupon)
+        String action = request.getParameter("action");
+        if ("applyCoupon".equals(action)) {
+            String couponCode = request.getParameter("couponCode");
+            if (couponCode == null || couponCode.trim().isEmpty()) {
+                session.removeAttribute("appliedCoupon");
+            }
+        }
+        
+        // Handle coupon logic
+        String appliedCouponCode = (String) session.getAttribute("appliedCoupon");
+        double discountAmount = 0;
+        model.Coupon appliedCoupon = null;
+        if (appliedCouponCode != null) {
+            appliedCoupon = utils.CouponUtils.getCouponByCode(appliedCouponCode);
+            if (appliedCoupon != null) {
+                if (total >= appliedCoupon.getMinOrderValue()) {
+                    long now = System.currentTimeMillis();
+                    if (now >= appliedCoupon.getStartDate().getTime() && now <= appliedCoupon.getEndDate().getTime()) {
+                        if (appliedCoupon.getUsedCount() < appliedCoupon.getUsageLimit()) {
+                            discountAmount = total * (appliedCoupon.getDiscountPercent() / 100.0);
+                            request.setAttribute("couponMessage", "Áp dụng mã giảm giá thành công: -" + appliedCoupon.getDiscountPercent() + "%");
+                            request.setAttribute("coupon", appliedCoupon);
+                        } else {
+                            request.setAttribute("couponError", "Mã giảm giá đã hết lượt sử dụng.");
+                            session.removeAttribute("appliedCoupon");
+                        }
+                    } else {
+                        request.setAttribute("couponError", "Mã giảm giá không trong thời gian có hiệu lực.");
+                        session.removeAttribute("appliedCoupon");
+                    }
+                } else {
+                    request.setAttribute("couponError", "Đơn hàng chưa đạt giá trị tối thiểu " + String.format("%,.0f", appliedCoupon.getMinOrderValue()) + "đ.");
+                    session.removeAttribute("appliedCoupon");
+                }
+            } else {
+                request.setAttribute("couponError", "Mã giảm giá không tồn tại.");
+                session.removeAttribute("appliedCoupon");
+            }
+        }
+
         request.setAttribute("items", items);
         request.setAttribute("total", total);
+        request.setAttribute("discountAmount", discountAmount);
+        request.setAttribute("finalTotal", total - discountAmount);
+        
+        User user = (User) session.getAttribute("user");
+        if(user != null) {
+            try (Connection conn = DBUtils.getConnection()) {
+                List<model.Address> addresses = AddressUtils.getAddressesByUser(conn, user.getEmail());
+                request.setAttribute("addresses", addresses);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
         request.getRequestDispatcher("/WEB-INF/views/cart.jsp").forward(request, response);
     }
 
@@ -46,6 +107,18 @@ public class CartServlet extends HttpServlet {
 
         if ("/checkout".equals(servletPath)) {
             processCheckout(request, response);
+            return;
+        }
+
+        String action = request.getParameter("action");
+        if ("applyCoupon".equals(action)) {
+            String couponCode = request.getParameter("couponCode");
+            if (couponCode != null && !couponCode.trim().isEmpty()) {
+                request.getSession().setAttribute("appliedCoupon", couponCode.trim());
+            } else {
+                request.getSession().removeAttribute("appliedCoupon");
+            }
+            response.sendRedirect(request.getContextPath() + "/cart");
             return;
         }
 
@@ -108,9 +181,26 @@ public class CartServlet extends HttpServlet {
 
         Map<Integer, Integer> cart = getCart(session);
         User user = (User) session.getAttribute("user");
-        String message = productUtils.checkout(cart, user.getEmail());
+        int addressId = parseInt(request.getParameter("addressId"), -1); // Assume basic setup for now
+        
+        int couponId = -1;
+        String appliedCouponCode = (String) session.getAttribute("appliedCoupon");
+        if (appliedCouponCode != null) {
+            model.Coupon coupon = utils.CouponUtils.getCouponByCode(appliedCouponCode);
+            if (coupon != null) {
+                couponId = coupon.getId();
+            }
+        }
+        
+        String paymentMethod = request.getParameter("paymentMethod");
+        if(paymentMethod == null || paymentMethod.isEmpty()) {
+            paymentMethod = "COD";
+        }
+
+        String message = utils.OrderUtils.checkout(cart, user.getEmail(), addressId, couponId, paymentMethod);
         if (message.startsWith("Đặt hàng thành công")) {
             cart.clear();
+            session.removeAttribute("appliedCoupon");
         }
         session.setAttribute("checkoutMessage", message);
         response.sendRedirect(request.getContextPath() + "/cart");

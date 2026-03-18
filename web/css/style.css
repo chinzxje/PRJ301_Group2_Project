@@ -447,3 +447,122 @@ button:hover {
     padding: 8px 10px;
     border-radius: 6px;
 }
+
+/* Coupon Section Styling */
+.voucher-container {
+    margin-top: 24px;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.voucher-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a365d;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.voucher-form {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.voucher-input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+    background: #f8fafc;
+}
+
+.voucher-input:focus {
+    outline: none;
+    border-color: #3182ce;
+    background: #fff;
+}
+
+.btn-apply {
+    padding: 10px 20px;
+    background: #3182ce;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.btn-apply:hover {
+    background: #2b6cb0;
+}
+
+.btn-apply:active {
+    transform: scale(0.97);
+}
+
+.voucher-applied {
+    margin-top: 12px;
+    padding: 8px 12px;
+    background: #f0fff4;
+    border: 1px solid #c6f6d5;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.voucher-tag {
+    background: #38a169;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.btn-remove-voucher {
+    color: #e53e3e;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.btn-remove-voucher:hover {
+    text-decoration: underline;
+}
+
+.total-breakdown {
+    margin-top: 20px;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 16px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.total-row.discount {
+    color: #38a169;
+    font-weight: 600;
+}
+
+.total-row.grand-total {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 2px solid #edf2f7;
+    font-size: 18px;
+    font-weight: 800;
+    color: #2d3748;
+}

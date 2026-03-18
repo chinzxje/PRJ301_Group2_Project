@@ -7,7 +7,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.sql.Connection;
+import java.util.List;
 import model.Product;
+import model.User;
+import model.Review;
+import utils.ReviewUtils;
+import utils.WishlistUtils;
+import utils.DBUtils;
 
 @WebServlet(urlPatterns = {"/product"})
 public class ProductDetailServlet extends HttpServlet {
@@ -24,6 +32,22 @@ public class ProductDetailServlet extends HttpServlet {
         }
 
         request.setAttribute("product", product);
+        
+        try (Connection conn = DBUtils.getConnection()) {
+            List<Review> reviews = ReviewUtils.getReviewsByProduct(conn, id);
+            request.setAttribute("reviews", reviews);
+            
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
+            boolean inWishlist = false;
+            if(user != null) {
+                inWishlist = WishlistUtils.checkInWishlist(conn, user.getEmail(), id);
+            }
+            request.setAttribute("inWishlist", inWishlist);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         request.getRequestDispatcher("/WEB-INF/views/product-detail.jsp").forward(request, response);
     }
 
